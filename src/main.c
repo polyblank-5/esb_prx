@@ -15,6 +15,8 @@
 #include <zephyr/kernel.h>
 #include <zephyr/types.h>
 
+#include "uart.h"
+
 LOG_MODULE_REGISTER(esb_prx, CONFIG_ESB_PRX_APP_LOG_LEVEL);
 
 static const struct gpio_dt_spec leds[] = {
@@ -92,14 +94,6 @@ void event_handler(struct esb_evt const *event)
 				rx_payload.data[3], rx_payload.data[4],
 				rx_payload.data[5], rx_payload.data[6],
 				rx_payload.data[7]);
-			/*LOG_DBG("Packet received, len %d : "
-				"0x%02x, 0x%02x, 0x%02x, 0x%02x, "
-				"0x%02x, 0x%02x, 0x%02x, 0x%02x",
-				rx_payload.length, rx_payload.data[8],
-				rx_payload.data[9], rx_payload.data[10],
-				rx_payload.data[11], rx_payload.data[12],
-				rx_payload.data[13], rx_payload.data[14],
-				rx_payload.data[15]);*/
 			leds_update(rx_payload.data[1]);
 		} else {
 			LOG_ERR("Error while reading rx packet");
