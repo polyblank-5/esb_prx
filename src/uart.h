@@ -6,7 +6,7 @@
 #include <string.h>
 #include <zephyr/drivers/gpio.h>
 #include <esb.h>
-
+#include <zephyr/logging/log.h>
 
 #define UART_DEVICE_NODE DT_CHOSEN(zephyr_shell_uart)
 static const struct device *const uart_dev = DEVICE_DT_GET(DT_NODELABEL(uart0)); 

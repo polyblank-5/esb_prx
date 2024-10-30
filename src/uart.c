@@ -1,7 +1,7 @@
 #include "uart.h"
 
 K_MSGQ_DEFINE(command_queue, sizeof(struct esb_payload), 10, 4);
-LOG_MODULE_REGISTER(uart);
+LOG_MODULE_REGISTER(uart,4);
 
 
 void print_uart(char *buf)
@@ -31,7 +31,7 @@ void serial_cb(const struct device *dev, void *user_data)
 	}
 
     uart_fifo_read(dev, &c, 1);
-
+    LOG_DBG("byte read: %c",c);
     switch (msg) {
     case new_msg:
         bytes_to_read = c ; // TODO: change back to hex read instead of char 
@@ -44,7 +44,7 @@ void serial_cb(const struct device *dev, void *user_data)
             rx_buf[rx_buf_pos] = '\0';
             static struct esb_payload command;
             memcpy(command.data, rx_buf, sizeof(uint8_t)*(bytes_to_read));
-            LOG_DBG(command.data);
+            LOG_DBG("%s",(char*) command.data);
             LOG_DBG("\r\n");
             command.length = bytes_to_read-1;
             k_msgq_put(&command_queue, &command, K_NO_WAIT); //TODO If in other wait modes, doesnt continue
@@ -63,11 +63,12 @@ void serial_cb(const struct device *dev, void *user_data)
 int uart_initialization(){
     if (!device_is_ready(uart_dev)) {
             LOG_DBG("UART device not found!");
-            return;
+            return 1;
         }
 
     uint8_t err = uart_irq_callback_user_data_set(uart_dev, serial_cb, NULL);
 	uart_irq_rx_enable(uart_dev);
+    print_uart("UART READY");
     return err;
 }
 

@@ -95,6 +95,7 @@ void event_handler(struct esb_evt const *event)
 				rx_payload.data[5], rx_payload.data[6],
 				rx_payload.data[7]);
 			leds_update(rx_payload.data[1]);
+			uart_queue_send(&rx_payload);
 		} else {
 			LOG_ERR("Error while reading rx packet");
 		}
@@ -222,9 +223,11 @@ int main(void)
 		LOG_ERR("RX setup failed, err %d", err);
 		return 0;
 	}
+	uart_initialization();
 	struct esb_payload command;
-
+	print_uart("Echo: ");
 	while (uart_queue_receive(&command) == 0) {
+		LOG_DBG("UART Message:%s",command.data);
 		print_uart("Echo: ");
 		print_uart(command.data);
 		print_uart("\r\n");
@@ -232,5 +235,6 @@ int main(void)
 	}
 
 	/* return to idle thread */
+	LOG_DBG("MAIN End");
 	return 0;
 }
