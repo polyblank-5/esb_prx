@@ -222,6 +222,14 @@ int main(void)
 		LOG_ERR("RX setup failed, err %d", err);
 		return 0;
 	}
+	struct esb_payload command;
+
+	while (uart_queue_receive(&command) == 0) {
+		print_uart("Echo: ");
+		print_uart(command.data);
+		print_uart("\r\n");
+
+	}
 
 	/* return to idle thread */
 	return 0;

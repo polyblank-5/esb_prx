@@ -32,8 +32,9 @@ typedef enum  {
 
 void print_uart(char *buf);
 void serial_cb(const struct device *dev, void *user_data);
+int uart_initialization();
 
 
 int uart_queue_send(const struct esb_payload *command);
 
-int uart_queue_receive(const struct esb_payload *command);
+int uart_queue_receive( struct esb_payload *command);
