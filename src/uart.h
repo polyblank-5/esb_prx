@@ -31,6 +31,8 @@ typedef enum  {
 //K_MSGQ_DEFINE(uart_msgq, MSG_SIZE, 10, 4);
 
 void print_uart(char *buf);
+void print_uart_payload(uint8_t *buf, uint16_t msg_len);
+
 void serial_cb(const struct device *dev, void *user_data);
 int uart_initialization();
 

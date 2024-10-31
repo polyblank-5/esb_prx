@@ -12,6 +12,12 @@ void print_uart(char *buf)
 		uart_poll_out(uart_dev, buf[i]);
 	}
 }
+
+void print_uart_payload(uint8_t *buf, uint16_t msg_len){
+    for (int i = 0; i < msg_len; i++) {
+		uart_poll_out(uart_dev, buf[i]);
+	}
+}
 uart_msg_t msg = new_msg;
 static uint8_t bytes_to_read = 0;
 static uint8_t rx_buf[32];
@@ -68,7 +74,6 @@ int uart_initialization(){
 
     uint8_t err = uart_irq_callback_user_data_set(uart_dev, serial_cb, NULL);
 	uart_irq_rx_enable(uart_dev);
-    print_uart("UART READY");
     return err;
 }
 

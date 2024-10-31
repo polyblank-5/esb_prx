@@ -17,6 +17,7 @@
 
 #include "uart.h"
 
+
 LOG_MODULE_REGISTER(esb_prx, CONFIG_ESB_PRX_APP_LOG_LEVEL);
 
 static const struct gpio_dt_spec leds[] = {
@@ -224,13 +225,16 @@ int main(void)
 		return 0;
 	}
 	uart_initialization();
-	struct esb_payload command;
-	print_uart("Echo: ");
-	while (uart_queue_receive(&command) == 0) {
-		LOG_DBG("UART Message:%s",command.data);
-		print_uart("Echo: ");
-		print_uart(command.data);
-		print_uart("\r\n");
+	struct esb_payload command = {0};
+	print_uart("UART Initialized");
+	while (1) {
+		if (uart_queue_receive(&command) == 0){
+			LOG_DBG("UART Message:%s",(char*)command.data);
+			//print_uart("Echo: ");
+			print_uart_payload(command.data,command.length);
+			//print_uart("\r\n");
+		}
+		
 
 	}
 
