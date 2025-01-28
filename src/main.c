@@ -86,7 +86,7 @@ void event_handler(struct esb_evt const *event)
 		LOG_DBG("TX FAILED EVENT");
 		break;
 	case ESB_EVENT_RX_RECEIVED:
-		if (esb_read_rx_payload(&rx_payload) == 0) {
+		if (esb_read_rx_payload(&rx_payload) == 0) { // TODO send the number of bytes received
 			LOG_DBG("Packet received, len %d : "
 				"0x%02x, 0x%02x, 0x%02x, 0x%02x, "
 				"0x%02x, 0x%02x, 0x%02x, 0x%02x",
@@ -96,7 +96,9 @@ void event_handler(struct esb_evt const *event)
 				rx_payload.data[5], rx_payload.data[6],
 				rx_payload.data[7]);
 			leds_update(rx_payload.data[1]);
-			uart_queue_send(&rx_payload);
+			if (((rx_payload.data[0] & 0xf3) == 0x61 && rx_payload.data[1] == 0x09) || ((rx_payload.data[0] & 0xf3) == 0x80 && rx_payload.data[1] == 0x05)){
+				uart_queue_send(&rx_payload);
+			}
 		} else {
 			LOG_ERR("Error while reading rx packet");
 		}

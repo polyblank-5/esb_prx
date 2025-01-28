@@ -14,9 +14,11 @@ void print_uart(char *buf)
 }
 
 void print_uart_payload(uint8_t *buf, uint16_t msg_len){
+    uart_poll_out(uart_dev,msg_len+1);
     for (int i = 0; i < msg_len; i++) {
 		uart_poll_out(uart_dev, buf[i]);
 	}
+    uart_poll_out(uart_dev,13);
 }
 uart_msg_t msg = new_msg;
 static uint8_t bytes_to_read = 0;
