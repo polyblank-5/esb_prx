@@ -96,7 +96,7 @@ void event_handler(struct esb_evt const *event)
 				rx_payload.data[5], rx_payload.data[6],
 				rx_payload.data[7]);
 			leds_update(rx_payload.data[1]);
-			if (((rx_payload.data[0] & 0xf3) == 0x61 && rx_payload.data[1] == 0x09) || ((rx_payload.data[0] & 0xf3) == 0x83 && rx_payload.data[1] == 0x05)){
+			if (((rx_payload.data[0] & 0xf3) == 0x61 && rx_payload.data[1] == 0x09) || ((rx_payload.data[0] & 0xf3) == 0x80 && rx_payload.data[1] == 0x05)){
 				uart_queue_send(&rx_payload);
 			}
 		} else {
