@@ -48,7 +48,7 @@ Building and running
 
 The Receiver sample can be found under :file:`samples/esb/esb_prx` in the |NCS| folder structure.
 
-See :ref:`building` and :ref:`programming` for information about how to build and program the application, respectively.
+See :ref:`building`, `debugging`_ and :ref:`programming` for information about how to build and program the application, respectively.
 
 FEM support
 ===========
@@ -87,3 +87,5 @@ In addition, it uses the following Zephyr libraries:
 * :ref:`zephyr:api_peripherals`:
 
    * :file:`include/gpio.h`
+
+:: _debugging: https://academy.nordicsemi.com/courses/nrf-connect-sdk-intermediate/lessons/lesson-2-debugging/topic/debugging-in-vs-code/

@@ -1,3 +1,5 @@
 build/
 esb_prx_debug.jdebug.user
 .vscode/
+drone_pos_logs.txt
+message_decoding.txt
