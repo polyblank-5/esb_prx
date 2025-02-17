@@ -99,6 +99,7 @@ void event_handler(struct esb_evt const *event)
 			if ((rx_payload.data[0] & 0xf3) == 0x30){
 				uart_queue_send(&rx_payload);
 			}
+			// uart_queue_send(&rx_payload);
 		} else {
 			LOG_ERR("Error while reading rx packet");
 		}
@@ -145,9 +146,9 @@ int esb_initialize(void)
 	/* These are arbitrary default addresses. In end user products
 	 * different addresses should be used for each set of devices.
 	 */
-	uint8_t base_addr_0[4] = {0xE7, 0xE7, 0xE7, 0xE7};
-	uint8_t base_addr_1[4] = {0xC2, 0xC2, 0xC2, 0xC2};
-	uint8_t addr_prefix[8] = {0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+	uint8_t base_addr_1[4] = {0xE6, 0xE6, 0xE6, 0xE6};
+	uint8_t base_addr_0[4] = {0xC2, 0xC2, 0xC2, 0xC2};
+	uint8_t addr_prefix[8] = {0xE7, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 //{0x00,0x00,0x00,0xFF};//
 	struct esb_config config = ESB_DEFAULT_CONFIG;
 	config.protocol = ESB_PROTOCOL_ESB_DPL;
